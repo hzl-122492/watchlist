@@ -1,9 +1,21 @@
+import os
+import sys
+
 from flask import Flask
 from flask import url_for,render_template
+from flask_sqlalchemy import SQLAlchemy
 from markupsafe import escape
 
+WIN = sys.platform.startswith('win')
+if WIN:
+    prefix = 'sqlite:///'
+else:
+    prefix = 'sqlite:////'
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(app.root_path,'data.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 name = 'DIXI'
 movies = [
     {'title': 'My Neighbor Totoro', 'year': '1988'},
