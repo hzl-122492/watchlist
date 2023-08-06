@@ -26,7 +26,25 @@ class Movie(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     title = db.Column(db.String(60))
     year = db.Column(db.String(4))
-    
+
+
+@app.context_processor
+def inject_user():          #重复变量的统一注入
+    user = User.query.first()
+    return dict(user = user)
+
+
+
+@app.errorhandler(404)
+def page_not_found(e):  # 传入要处理的错误代码
+    # user = User.query.first() # 接受异常对象作为参数
+    return render_template('404.html'),404
+                           
+@app.route('/')
+def index():
+    name = 'DIXI'
+    movies = Movie.query.all()
+    return render_template('index.html',name = name, movies = movies)
 
 
 @app.cli.command()
@@ -35,8 +53,8 @@ def forge():
     db.create_all()
 
     # 全局的两个变量移动到这个函数内
-    name = 'DIXI'
-    movies = [
+    # forge_name = 'DIXI'
+    forge_movies = [
         {'title': 'My Neighbor Totoro', 'year': '1988'},
         {'title': 'Dead Poets Society', 'year': '1989'},
         {'title': 'A Perfect World', 'year': '1993'},
@@ -49,27 +67,23 @@ def forge():
         {'title': 'The Pork of Music', 'year': '2012'},
     ]
 
-    user = User(name=name)
+    user = user.name
     db.session.add(user)
-    for m in movies:
+    for m in forge_movies:
         movie = Movie(title=m['title'], year=m['year'])
         db.session.add(movie)
 
     db.session.commit()
     click.echo('Done.')
 
-
-@app.cli.command()  # 注册为命令，可以传入 name 参数来自定义命令
-@click.option('--drop', is_flag=True, help='Create after drop.')  # 设置选项
-def initdb(drop):
-    """Initialize the database."""
-    if drop:  # 判断是否输入了选项
-        db.drop_all()
-    db.create_all()
-    click.echo('Initialized database.')  # 输出提示信息
-@app.route('/')
-def index():
-    return render_template('index.html',name = name, movies = movies)
+# @app.cli.command()  # 注册为命令，可以传入 name 参数来自定义命令
+# @click.option('--drop', is_flag=True, help='Create after drop.')  # 设置选项
+# def initdb(drop):
+#     """Initialize the database."""
+#     if drop:  # 判断是否输入了选项
+#         db.drop_all()
+#     db.create_all()
+#     click.echo('Initialized database.')  # 输出提示信息
 
 
 # @app.route('/user/<name>')
