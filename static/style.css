@@ -1,3 +1,18 @@
+/* 
+1.页面整体
+2.导航栏
+3.页脚
+4.头像
+5.电影列表
+6.龙猫图片
+7.IMDb链接
+8.input 元素定义 
+9.弹窗消息
+*/
+
+
+
+
 /* 页面整体 */
 body {
     margin: auto;
@@ -76,7 +91,7 @@ footer {
     float: right;
 }
 
-.imdb {
+.imdb{
     font-size: 12px;
     font-weight: bold;
     color: black;
@@ -84,4 +99,62 @@ footer {
     background: #F5C518;
     border-radius: 5px;
     padding: 3px 5px;
+}
+
+/* 覆盖某些浏览器对 input 元素定义的字体 */
+input[type=submit] {
+    font-family: inherit;
+}
+
+input[type=text] {
+    border: 1px solid #ddd;
+}
+
+input[name=year] {
+    width: 150px;
+}
+
+.btn {
+    font-size: 12px;
+    padding: 3px 5px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: rgb(219, 215, 215);
+    color: black;
+    border: 1px solid #555555;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+}
+
+/* 弹窗消息 */
+.alert {
+    position: relative;
+    padding: 7px;
+    margin: 7px 0;
+    border: 1px solid transparent;
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+    border-radius: 5px;
+}
+
+.inline-form{
+    display: inline;
+}
+.btn_delete{
+    font-size: 12px;
+    padding: 3px 5px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: rgb(39, 65, 78);
+    color: rgb(255, 0, 0);
+    border: 1px solid #555555;
+    border-radius: 5px;
+
 }
